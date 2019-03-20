@@ -1,0 +1,25 @@
+{% extends "base.j2" %}
+
+{% block script %}
+<link href={{ url_for('static', filename='admin.css') }} rel="stylesheet">
+<script src="{{ url_for('static', filename='status_select.js') }}"/></script>
+{% endblock %}
+
+
+{% block content %}
+<!-- <iframe width="300" height="200" src="/panel"></iframe> -->
+
+{% for id, item in descriptions %}
+<div id="status-{{ id }}"
+    class="status-container {% if id == 'custom' %} edit-enabled {% endif %}">
+    <input type="radio" name="status"
+        {% if selected == id %}checked=true{% endif %}>
+    <!-- <label for="{{ id }}">{{item}}</label> -->
+    <input type="text" value="{{ item }}"
+        {% if id != 'custom' %} disabled {% endif %}>
+    <input type="checkbox" class="button edit-button"
+        {% if id == 'custom' %} checked=true {% endif %}>
+    <button class="delete-button">Delete</button>
+</div>
+{% endfor %}
+{% endblock %}
