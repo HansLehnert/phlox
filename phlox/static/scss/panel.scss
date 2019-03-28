@@ -1,0 +1,39 @@
+.body {
+    color: rgb(39, 39, 39);
+}
+
+#status_container {
+    font-size: 10vh;
+}
+
+.fadeout {
+    animation-name: fade;
+    animation-duration: 0.8s;
+    animation-timing-function: linear;
+    animation-direction: normal;
+}
+
+.fadein {
+    animation-name: fade;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-direction: reverse;
+}
+
+@keyframes fade {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-4vh);
+    }
+}
+
+#address{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+}

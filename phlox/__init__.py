@@ -1,6 +1,8 @@
 import flask
 import os
 
+from sassutils.wsgi import SassMiddleware
+
 from phlox.panel import bp as panel
 from phlox.admin import bp as admin
 from phlox.api import bp as api
@@ -9,6 +11,12 @@ from phlox.api import bp as api
 def create_app():
     app = flask.Flask(__name__)
     app.config.from_object('phlox.config.Config')
+
+    # Sass support
+    app.wsgi_app = SassMiddleware(
+        app.wsgi_app,
+        {'phlox': ('static/scss', 'static/css', 'static/css')}
+    )
 
     # Create instance dir
     os.makedirs(app.instance_path, exist_ok=True)

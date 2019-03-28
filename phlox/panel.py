@@ -5,11 +5,20 @@ bp = flask.Blueprint('panel', __name__, url_prefix='/panel')
 
 @bp.route('/')
 def show_panel():
-    status = flask.current_app.db['status']
+    db = flask.current_app.db
 
-    if status['selected'] == 'custom':
-        status = status['custom']
+    if db['status']['selected'] == 'custom':
+        status = db['status']['custom']
     else:
-        status = status['saved'][status['selected']]
+        status = db['status']['saved'][db['status']['selected']]
 
-    return flask.render_template('panel.j2', status=status)
+    if db['show_ip']:
+        address = flask.request.host
+    else:
+        address = ''
+
+    return flask.render_template(
+        'panel.j2',
+        status=status,
+        address=address,
+    )
