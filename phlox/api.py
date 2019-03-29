@@ -11,7 +11,11 @@ def create_status():
     db = flask.current_app.db
     post_data = request.json
 
-    new_id = str(max(int(id) for id in db['status']['saved']) + 1)
+    try:
+        new_id = str(max(int(id) for id in db['status']['saved']) + 1)
+    except ValueError:
+        new_id = '1'
+
     db['status']['saved'][new_id] = post_data['description']
 
     response = {

@@ -3,10 +3,17 @@
     <head>
         {% if title %}
         <title>{{title}}</title>
+
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1">
+
         {% endif %}
         {% block script %}{% endblock %}
     </head>
     <body>
-        {% block content %}{% endblock %}
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
     </body>
 </html>

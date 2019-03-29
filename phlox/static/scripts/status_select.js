@@ -33,7 +33,7 @@ function selectStatus(id) {
 function setStatus(event) {
     var id = getStatusId(this.parentNode.id);
     if (this.checked == true) {
-        apiRequest("/api/status/selected", "POST", {id: this.parentNode.id});
+        apiRequest("/api/status/selected", "POST", {id: id});
     }
 }
 
@@ -54,10 +54,12 @@ function deleteStatus(event) {
             selectStatus("custom");
         }
 
-        console.log("/api/status/" + id)
         apiRequest("/api/status/" + id, "DELETE").then(result => {
             if (result.status == "ok") {
-                parent.parentNode.removeChild(parent);
+                parent.classList.add("deleted");
+                parent.addEventListener("animationend", function () {
+                    parent.parentNode.removeChild(parent);
+                }, {once: true});
             }
         })
     }
@@ -102,7 +104,13 @@ function toggleEdit(event) {
     }
     else {
         parent.classList.toggle("edit-enabled", this.checked);
-        parent.querySelector("input[type=text]").disabled = !this.checked;
+        var text_box = parent.querySelector("input[type=text]");
+        text_box.disabled = !this.checked;
+
+        // Select the text-box and move the cursor to the end
+        text_box.focus();
+        text_box.selectionStart = text_box.value.length;
+        text_box.selectionEnd = text_box.value.length;
 
         if (this.checked == false) {
             description = parent.querySelector("input[type=text]").value;
@@ -120,15 +128,14 @@ function apiRequest(url, method, data = "") {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(data)
-    }).then(
-        function (response) {
-            if (response.ok) {
-                var data = response.json()
-                if (data.status == "fail") {
-                    console.log(data.error)
-                }
-                return data
-            }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
         }
-    );
+    }).then(data => {
+        if (data.status == "fail") {
+            console.log(data.error);
+        }
+        return data;
+    })
 }

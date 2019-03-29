@@ -1,0 +1,182 @@
+$background: rgb(251, 245, 255);
+$background_highlight: #FFF;
+$border: rgb(225, 177, 255);
+$border_highlight: rgb(210, 137, 255);
+$border_accent: rgb(138, 78, 173);
+$text_disabled: rgb(96, 75, 109);
+$text_active: rgb(191, 108, 240);
+$accent: rgb(197, 139, 245);
+$accent_light: rgb(222, 190, 248);
+$accent_active: rgb(248, 152, 248);
+
+body {
+    background-color: $background;
+}
+
+#content {
+    max-width: 120vh;
+    margin: 0 auto;
+}
+
+.container {
+    border: 1px solid $border;
+    border-radius: 1vh;
+    margin: 0.5vh;
+    padding: 1vh;
+    overflow: hidden;
+}
+
+.status-container {
+    display: flex;
+    align-items: center;
+    transition: 400ms;
+}
+
+.container.edit-enabled {
+    background-color: $background_highlight;
+    border-color: $border_highlight;
+    box-shadow: 0 0.1vh 1vh rgb(234, 199, 255);
+}
+
+.container.deleted {
+    animation: zip 400ms ease-out;
+}
+
+@keyframes zip {
+    from {
+        max-height: 12vh;
+    }
+    to {
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-top: -0.25vh;
+        margin-bottom: -0.25vh;
+    }
+}
+
+input, button {
+    appearance: none;
+    -webkit-appearance: none;
+
+    margin: 1vh;
+    outline: none;
+}
+
+// Radio button
+input[type=radio] {
+    width: 5vh;
+    height: 5vh;
+
+    border: 1px solid rgb(225, 177, 255);
+    border-radius: 50%;
+    background-color: $background;
+}
+
+input[type=radio]:checked {
+    background-color: $background_highlight;
+}
+
+input[type=radio]:hover {
+    border-color: $border_highlight;
+}
+
+input[type=radio]:before {
+    display: block;
+    content: '';
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10%;
+    height: 10%;
+
+    border: 1px solid $border;
+    border-radius: 50%;
+    background-color: transparent;
+
+    transition: 200ms;
+}
+
+input[type=radio]:checked {
+    border-color: $border_highlight;
+}
+
+input[type=radio]:checked:before {
+    background-color: $accent;
+    border-color: $border_accent;
+    width: 40%;
+    height: 40%;
+    transition: 100ms;
+}
+
+// Text input
+input[type=text]{
+    min-width: 0;
+    width: 100%;
+    flex: 1;
+
+    border: 1px solid $border;
+    border-radius: 0.5vh;
+    background-color: transparent;
+    padding: 0.8vh;
+    color: $text_active;
+
+    font-size: 3vh;
+}
+
+input[type=text]:disabled {
+    color: $text_disabled;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+// Buttons
+.button {
+    width: 5vh;
+    height: 5vh;
+    padding: 0.4vh;
+    margin: 0.5vh;
+
+    border: 1px solid $border_accent;
+    border-radius: 0.5vh;
+
+    background-color: $accent;
+}
+
+.button:hover {
+    background-color: $accent_light;
+}
+
+.button:active {
+    background-color: $accent_active;
+}
+
+.button:before {
+    content: "";
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-color: $background_highlight;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+}
+
+.delete-button:before{
+    mask-image: url(/static/icons/x.svg);
+    -webkit-mask-image: url(/static/icons/x.svg);
+}
+
+.edit-button:before{
+    mask-image: url(/static/icons/pencil.svg);
+    -webkit-mask-image: url(/static/icons/pencil.svg);
+}
+
+.edit-button:checked:before{
+    mask-image: url(/static/icons/lock.svg);
+    -webkit-mask-image: url(/static/icons/lock.svg);
+}

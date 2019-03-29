@@ -2,3 +2,4 @@
 .vscode/
 instance/
 __pycache__/
+*.scss.css*
