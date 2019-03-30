@@ -17,8 +17,8 @@ function getStatusId(str) {
 function addContainerEvents(node) {
     node.querySelector("input[type=radio]").onchange = setStatus;
     node.querySelector("input[type=text]").oninput = updateStatus;
-    node.querySelector("input[type=checkbox]").onchange = toggleEdit;
-    node.querySelector("button").onclick = deleteStatus;
+    node.querySelector("button.edit-button").onclick = toggleEdit;
+    node.querySelector("button.delete-button").onclick = deleteStatus;
 }
 
 
@@ -74,7 +74,7 @@ function toggleEdit(event) {
     if (id == "custom") {
         var description = parent.querySelector("input[type=text]").value;
 
-        if (this.checked == false && description.length > 0) {
+        if (description.length > 0) {
             apiRequest(
                 "/api/status", "POST", {description: description}
             ).then(result => {
@@ -84,13 +84,15 @@ function toggleEdit(event) {
 
                     // Create new list element for the custom status
                     var container = parent.cloneNode(true);
-                    container.querySelector("[type=checkbox]").checked = true;
+                    var edit_button = container.querySelector(".edit-button");
+                    edit_button.classList.add("enabled");
                     addContainerEvents(container);
                     parent.parentNode.appendChild(container);
 
                     // Change id of current container to the new id
                     parent.id = "status-" + result.id;
-                    this.onchange();
+                    // Disable edit
+                    this.onclick();
 
                     if (is_selected) {
                         selectStatus(result.id);
@@ -98,21 +100,21 @@ function toggleEdit(event) {
                 }
             });
         }
-        else {
-            this.checked = true;
-        }
     }
     else {
-        parent.classList.toggle("edit-enabled", this.checked);
+        var enabled = !this.classList.contains("enabled");
+
+        parent.classList.toggle("enabled", enabled);
+        this.classList.toggle("enabled", enabled)
         var text_box = parent.querySelector("input[type=text]");
-        text_box.disabled = !this.checked;
+        text_box.disabled = !enabled;
 
         // Select the text-box and move the cursor to the end
         text_box.focus();
         text_box.selectionStart = text_box.value.length;
         text_box.selectionEnd = text_box.value.length;
 
-        if (this.checked == false) {
+        if (!enabled) {
             description = parent.querySelector("input[type=text]").value;
             result = apiRequest(
                 "/api/status/" + id, "POST", {description: description});

@@ -11,17 +11,48 @@ $accent_active: rgb(248, 152, 248);
 
 body {
     background-color: $background;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 0;
+    color: $text_disabled;
 }
 
 #content {
-    max-width: 120vh;
-    margin: 0 auto;
+    margin-left: 30vh;
+    padding: 1vh;
+}
+
+// Navbar
+#navbar {
+    position: fixed;
+    width: 30vh;
+    height: 100%;
+    margin: 0;
+    background-color: $accent_light;
+    overflow: auto;
+}
+
+#navbar a {
+    display: block;
+    padding: 2vh;
+}
+
+@media (max-width: 500px) {
+    #navbar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    #content {
+        margin-left: 0;
+    }
 }
 
 .container {
+    max-width: 120vh;
     border: 1px solid $border;
     border-radius: 1vh;
-    margin: 0.5vh;
+    margin: 0.5vh auto;
     padding: 1vh;
     overflow: hidden;
 }
@@ -32,7 +63,7 @@ body {
     transition: 400ms;
 }
 
-.container.edit-enabled {
+.container.enabled {
     background-color: $background_highlight;
     border-color: $border_highlight;
     box-shadow: 0 0.1vh 1vh rgb(234, 199, 255);
@@ -122,6 +153,7 @@ input[type=text]{
     padding: 0.8vh;
     color: $text_active;
 
+    font-family: inherit;
     font-size: 3vh;
 }
 
@@ -131,8 +163,57 @@ input[type=text]:disabled {
     border-color: transparent;
 }
 
+// Checkbox
+input[type=checkbox] {
+    width: 4vh;
+    height: 4vh;
+    position: relative;
+    vertical-align: middle;
+    background-color: $background_highlight;
+    border: 1px solid $border;
+    border-radius: 0.5vh;
+    overflow: hidden;
+}
+
+input[type=checkbox]:checked {
+    border-color: $border_accent;
+}
+
+input[type=checkbox]:before {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $accent;
+    border-radius: 100%;
+    transition: 300ms;
+}
+
+input[type=checkbox]:checked:before {
+    width: 160%;
+    height: 160%;
+}
+
+input[type=checkbox]:after {
+    display: block;
+    float: left;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    content: "✓";
+    color: $background_highlight;
+    // font-family: sans;
+    font-size: 3vh;
+    font-weight: bold;
+}
+
 // Buttons
-.button {
+button {
     width: 5vh;
     height: 5vh;
     padding: 0.4vh;
@@ -144,15 +225,15 @@ input[type=text]:disabled {
     background-color: $accent;
 }
 
-.button:hover {
+button:hover {
     background-color: $accent_light;
 }
 
-.button:active {
+button:active {
     background-color: $accent_active;
 }
 
-.button:before {
+button:before {
     content: "";
     display: inline-block;
     width: 100%;
@@ -176,7 +257,7 @@ input[type=text]:disabled {
     -webkit-mask-image: url(/static/icons/pencil.svg);
 }
 
-.edit-button:checked:before{
+.edit-button.enabled:before{
     mask-image: url(/static/icons/lock.svg);
     -webkit-mask-image: url(/static/icons/lock.svg);
 }
