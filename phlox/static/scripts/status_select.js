@@ -16,9 +16,12 @@ function getStatusId(str) {
 
 function addContainerEvents(node) {
     node.querySelector("input[type=radio]").onchange = setStatus;
-    node.querySelector("input[type=text]").oninput = updateStatus;
     node.querySelector("button.edit-button").onclick = toggleEdit;
     node.querySelector("button.delete-button").onclick = deleteStatus;
+
+    var text_box = node.querySelector("input[type=text]")
+    text_box.oninput = updateStatus;
+    text_box.onkeydown = endEdit;
 }
 
 
@@ -42,6 +45,14 @@ function updateStatus(event) {
     var id = getStatusId(this.parentNode.id)
     if (id == 'custom') {
         apiRequest("/api/status/custom", "POST", {description: this.value});
+    }
+}
+
+
+function endEdit(event) {
+    if (event.keyCode == 13) {
+        var edit_button = this.parentNode.querySelector("button.edit-button");
+        edit_button.click();
     }
 }
 
@@ -86,13 +97,14 @@ function toggleEdit(event) {
                     var container = parent.cloneNode(true);
                     var edit_button = container.querySelector(".edit-button");
                     edit_button.classList.add("enabled");
+                    container.querySelector("input[type=text]").value = "";
                     addContainerEvents(container);
                     parent.parentNode.appendChild(container);
 
                     // Change id of current container to the new id
                     parent.id = "status-" + result.id;
                     // Disable edit
-                    this.onclick();
+                    this.click();
 
                     if (is_selected) {
                         selectStatus(result.id);
