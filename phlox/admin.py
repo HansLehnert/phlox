@@ -17,3 +17,12 @@ def status_selection():
         descriptions=status,
         selected=selected,
     )
+
+
+@bp.route('/config')
+def config():
+    return flask.render_template('config.j2')
+
+@bp.route('/about')
+def about():
+    return flask.render_template('about.j2')
