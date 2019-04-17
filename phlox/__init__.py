@@ -23,8 +23,10 @@ def create_app():
 
     # Create database
     import phlox.db
-    app.db = phlox.db.JsonDict(os.path.join(
-        app.instance_path, app.config['DATABASE_FILE']))
+    app.db = phlox.db.AutosaveDict(
+        filename=os.path.join(app.instance_path, app.config['DATABASE_FILE']),
+        data=phlox.db._BASE_SETTINGS
+    )
 
     # Blueprints
     app.register_blueprint(panel)
