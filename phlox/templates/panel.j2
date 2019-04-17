@@ -1,9 +1,14 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta http-equiv="refresh" content="5">
+        <script
+            src={{ url_for('static', filename='scripts/panel_update.js')}}>
+        </script>
+        <link href={{ url_for('static', filename='css/panel.scss.css') }} rel="stylesheet">
     </head>
     <body>
-        {{ status }}
+        <div id="status_container"><span id="status_text">{{ status }}</span></div>
+
+        <div id="address">{{ address }}</div>
     </body>
 </html>
