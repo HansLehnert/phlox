@@ -18,7 +18,19 @@ body {
 
 #content {
     margin-left: 30vh;
-    padding: 1vh;
+    padding: 0.2em;
+}
+
+h1 {
+    font-size: 1.2em;
+    margin: 0 0 1vh;
+    padding: 0.2em;
+    border-bottom: 1px solid $border;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
 }
 
 // Navbar
@@ -33,7 +45,11 @@ body {
 
 #navbar a {
     display: block;
-    padding: 2vh;
+    padding: 0.8em;
+}
+
+#navbar a:hover {
+    background-color: $accent;
 }
 
 @media (max-width: 500px) {
@@ -50,39 +66,39 @@ body {
 
 .container {
     max-width: 120vh;
-    border: 1px solid $border;
-    border-radius: 1vh;
-    margin: 0.5vh auto;
-    padding: 1vh;
+    margin: 0.2em auto;
+    padding: 0.3em;
     overflow: hidden;
 }
 
 .status-container {
+    border: 1px solid $border;
+    border-radius: 0.2em;
     display: flex;
     align-items: center;
     transition: 400ms;
 }
 
-.container.enabled {
+.status-container.enabled {
     background-color: $background_highlight;
     border-color: $border_highlight;
-    box-shadow: 0 0.1vh 1vh rgb(234, 199, 255);
+    box-shadow: 0 0.1em 0.6em rgb(234, 199, 255);
 }
 
 .container.deleted {
     animation: zip 400ms ease-out;
 }
 
-@keyframes zip {
+@keyframes zip {  // Animation for deleted containes
     from {
-        max-height: 12vh;
+        max-height: 3em;
     }
     to {
         max-height: 0;
         padding-top: 0;
         padding-bottom: 0;
-        margin-top: -0.25vh;
-        margin-bottom: -0.25vh;
+        margin-top: -0.1em;
+        margin-bottom: -0.1em;
     }
 }
 
@@ -90,14 +106,16 @@ input, button {
     appearance: none;
     -webkit-appearance: none;
 
-    margin: 1vh;
+    margin: 0.2em;
     outline: none;
 }
 
 // Radio button
 input[type=radio] {
-    width: 5vh;
-    height: 5vh;
+    width: 2em;
+    height: 2em;
+    vertical-align: middle;
+
 
     border: 1px solid rgb(225, 177, 255);
     border-radius: 50%;
@@ -142,22 +160,26 @@ input[type=radio]:checked:before {
 }
 
 // Text input
-input[type=text]{
+input[type=text], input[type=password] {
+    border: 1px solid $border;
+    border-radius: 0.2em;
+    background-color: $background_highlight;
+    padding: 0.4em;
+    color: $text_active;
+
+    font-family: inherit;
+}
+
+.status-input {
     min-width: 0;
     width: 100%;
     flex: 1;
 
-    border: 1px solid $border;
-    border-radius: 0.5vh;
+    font-size: 1.1em;
     background-color: transparent;
-    padding: 0.8vh;
-    color: $text_active;
-
-    font-family: inherit;
-    font-size: 3vh;
 }
 
-input[type=text]:disabled {
+.status-input:disabled {
     color: $text_disabled;
     background-color: transparent;
     border-color: transparent;
@@ -165,62 +187,51 @@ input[type=text]:disabled {
 
 // Checkbox
 input[type=checkbox] {
-    width: 4vh;
-    height: 4vh;
+    width: 2em;
+    height: 2em;
     position: relative;
     vertical-align: middle;
     background-color: $background_highlight;
     border: 1px solid $border;
-    border-radius: 0.5vh;
+    border-radius: 0.2em;
     overflow: hidden;
 }
 
-input[type=checkbox]:checked {
-    border-color: $border_accent;
+input[type=checkbox]:hover {
+    border-color: $border_highlight;
 }
 
 input[type=checkbox]:before {
     display: block;
     content: "";
+    position: relative;
     width: 0;
     height: 0;
-    position: relative;
-    top: 50%;
-    left: 50%;
+    top: 48%;
+    left: 48%;
     transform: translate(-50%, -50%);
     background-color: $accent;
-    border-radius: 100%;
-    transition: 300ms;
+    border: none;
+    // border-radius: 0.2em;
+    transition: 100ms;
 }
 
 input[type=checkbox]:checked:before {
-    width: 160%;
-    height: 160%;
+    border: 1px solid $border_accent;
+
+    width: 60%;
+    height: 60%;
 }
 
-input[type=checkbox]:after {
-    display: block;
-    float: left;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    content: "✓";
-    color: $background_highlight;
-    // font-family: sans;
-    font-size: 3vh;
-    font-weight: bold;
-}
 
 // Buttons
 button {
-    width: 5vh;
-    height: 5vh;
-    padding: 0.4vh;
-    margin: 0.5vh;
+    color: $background;
+    font: inherit;
+    height: 2em;
 
     border: 1px solid $border_accent;
-    border-radius: 0.5vh;
+    border-radius: 0.2em;
 
     background-color: $accent;
 }
@@ -233,7 +244,7 @@ button:active {
     background-color: $accent_active;
 }
 
-button:before {
+.icon-button:before {
     content: "";
     display: inline-block;
     width: 100%;
@@ -247,7 +258,11 @@ button:before {
     -webkit-mask-size: contain;
 }
 
-.delete-button:before{
+.icon-button {
+    width: 2em;
+}
+
+.delete-button:before {
     mask-image: url(/static/icons/x.svg);
     -webkit-mask-image: url(/static/icons/x.svg);
 }
