@@ -1,0 +1,38 @@
+{
+    "name": "phlox",
+    "version": "1.0.0",
+    "description": "Web-based signage frontend",
+    "private": true,
+    "scripts": {
+        "build": "webpack --mode development",
+        "dev-server": "webpack-dev-server --open --hot"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/HansLehnert/phlox.git"
+    },
+    "author": "Hans Lehnert",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/HansLehnert/phlox/issues"
+    },
+    "homepage": "https://github.com/HansLehnert/phlox#readme",
+    "dependencies": {
+        "typescript": "^3.5.3",
+        "vue": "^2.6.10",
+        "vue-class-component": "^7.1.0",
+        "vue-property-decorator": "^8.2.1"
+    },
+    "devDependencies": {
+        "css-loader": "^3.2.0",
+        "node-sass": "^4.12.0",
+        "sass-loader": "^7.2.0",
+        "style-loader": "^1.0.0",
+        "ts-loader": "^6.0.4",
+        "vue-loader": "^15.7.1",
+        "vue-template-compiler": "^2.6.10",
+        "webpack": "^4.39.2",
+        "webpack-cli": "^3.3.6",
+        "webpack-dev-server": "^3.8.0"
+    }
+}
