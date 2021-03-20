@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 flask = "*"
 libsass = "*"
-jinja2 = "~=2.10.1"
+jinja2 = "~=2.11.3"
 
 [dev-packages]
 "flake8" = "*"
